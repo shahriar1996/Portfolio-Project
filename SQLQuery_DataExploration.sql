@@ -154,3 +154,41 @@ Join PortfolioProject..CovidVaccinations vac
 	On dea.location = vac.location
 	and dea.date = vac.date
 where dea.continent is not null 
+
+
+
+
+/*
+Query used for Tableau Project 
+*/
+
+-- 1
+select sum(new_cases) as total_case, sum(cast(new_deaths as int)) as total_deaths,
+round(sum(cast(new_deaths as int))/sum(new_cases)*100,3) as DeathPercentage
+from PortfolioProject..CovidDeaths
+where continent is not null
+
+--2
+select location, sum(cast(new_deaths as int)) as TotalDeathCount
+from PortfolioProject..CovidDeaths
+where continent is null 
+and location not in ('World', 'European Union', 'International')
+group by location
+order by TotalDeathCount desc
+
+-- 3
+select location, population, MAX(total_cases) as HighestInfectedCount,
+MAX(total_cases/population) * 100 as PercentPopulationInfected
+from PortfolioProject..CovidDeaths
+group by location, population
+order by PercentPopulationInfected desc
+
+-- 4
+select location, population, date, MAX(total_cases) as HighestInfectedCount,
+MAX(total_cases/population) * 100 as PercentPopulationInfected
+from PortfolioProject..CovidDeaths
+group by location, population, date
+order by PercentPopulationInfected desc
+
+
+
