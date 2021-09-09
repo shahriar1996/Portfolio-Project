@@ -4,7 +4,7 @@
 The datasets for this project can be downloaded from [Our World in Data](https://ourworldindata.org/covid-deaths).
 
 ## Tool
-Microsoft SQL Server
+Microsoft SQL Server | Tableau
 
 ## Summary of the project
 Covid 19 data exploration for fun.
