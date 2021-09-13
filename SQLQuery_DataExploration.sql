@@ -54,7 +54,6 @@ Group by Location
 order by TotalDeathCount desc
 
 
-
 -- BREAKING THINGS DOWN BY CONTINENT
 
 -- Showing contintents with the highest death count per population
@@ -67,7 +66,6 @@ Group by continent
 order by TotalDeathCount desc
 
 
-
 -- GLOBAL NUMBERS
 
 Select SUM(new_cases) as total_cases, SUM(cast(new_deaths as int)) as total_deaths, SUM(cast(new_deaths as int))/SUM(New_Cases)*100 as DeathPercentage
@@ -76,7 +74,6 @@ From PortfolioProject..CovidDeaths
 where continent is not null 
 --Group By date
 order by 1,2
-
 
 
 -- Total Population vs Vaccinations
@@ -112,7 +109,6 @@ Select *, (RollingPeopleVaccinated/Population)*100
 From PopvsVac
 
 
-
 -- Using Temp Table to perform Calculation on Partition By in previous query
 
 DROP Table if exists #PercentPopulationVaccinated
@@ -125,6 +121,7 @@ Population numeric,
 New_vaccinations numeric,
 RollingPeopleVaccinated numeric
 )
+
 
 Insert into #PercentPopulationVaccinated
 Select dea.continent, dea.location, dea.date, dea.population, vac.new_vaccinations
@@ -141,8 +138,6 @@ Select *, (RollingPeopleVaccinated/Population)*100
 From #PercentPopulationVaccinated
 
 
-
-
 -- Creating View to store data for later visualizations
 
 Create View PercentPopulationVaccinated as
@@ -156,7 +151,7 @@ Join PortfolioProject..CovidVaccinations vac
 where dea.continent is not null 
 
 
-
+--------------------------------------------------------------------------------------
 
 /*
 Query used for Tableau Project 
@@ -189,6 +184,3 @@ MAX(total_cases/population) * 100 as PercentPopulationInfected
 from PortfolioProject..CovidDeaths
 group by location, population, date
 order by PercentPopulationInfected desc
-
-
-
